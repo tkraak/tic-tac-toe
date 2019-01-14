@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './Board';
+import Status from './Status';
 import calculateWinner from '../helpers/calculateWinner';
 import style from './Game.css';
 
@@ -49,7 +50,7 @@ export default class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const squares = current.squares.slice();
 
     const moves = history.map((step, move) => {
       const desc = move
@@ -62,23 +63,16 @@ export default class Game extends React.Component {
       );
     });
 
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return (
       <div className={style.game}>
         <div>
           <Board
-            squares={current.squares}
+            squares={squares}
             onClick={i => this.handleClick(i)}
           />
         </div>
-        <div className="game-info">
-          <div>{status}</div>
+        <div className={style.info}>
+          <Status squares={squares} xIsNext={this.state.xIsNext} />
           <ol>{moves}</ol>
         </div>
       </div>
