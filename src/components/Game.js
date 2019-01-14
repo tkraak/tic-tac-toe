@@ -1,6 +1,7 @@
 import React from 'react';
 import Board from './Board';
 import calculateWinner from '../helpers/calculateWinner';
+import style from './Game.css';
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -69,8 +70,8 @@ export default class Game extends React.Component {
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
+      <div className={style.game}>
+        <div>
           <Board
             squares={current.squares}
             onClick={i => this.handleClick(i)}

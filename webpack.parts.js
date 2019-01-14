@@ -19,7 +19,7 @@ exports.loadJavaScript = ({ include, exclude } = {}) => ({
         exclude,
         use: {
           loader: 'babel-loader',
-        }
+        },
       },
     ],
   },
@@ -32,13 +32,25 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
         test: /\.css$/,
         include,
         exclude,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[local]___[hash:base64:5]',
+            },
+          },
+        ],
       },
     ],
   },
 });
 
-exports.extractCSS = ({ include, exclude, use = [] }) => {
+exports.extractCSS = ({ include, exclude } = {}) => {
   const plugin = new MiniCssExtractPlugin({
     filename: '[name].css',
   });
@@ -51,8 +63,17 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
           include,
           exclude,
           use: [
-            MiniCssExtractPlugin.loader,
-          ].concat(use),
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: '[local]___[hash:base64:5]',
+              },
+            },
+          ],
         },
       ],
     },

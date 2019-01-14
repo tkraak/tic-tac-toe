@@ -12,7 +12,7 @@ const commonConfig = merge([
   {
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.join(PATHS.app, 'index.html')
+        template: path.join(PATHS.app, 'index.html'),
       }),
     ],
   },
@@ -27,11 +27,7 @@ const developmentConfig = merge([
   parts.loadCSS(),
 ]);
 
-const productionConfig = merge([
-  parts.extractCSS({
-    use: 'css-loader',
-  }),
-]);
+const productionConfig = merge([parts.extractCSS()]);
 
 module.exports = mode => {
   if (mode === 'production') {
