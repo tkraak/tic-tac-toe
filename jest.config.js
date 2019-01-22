@@ -3,4 +3,7 @@
 
 module.exports = {
   collectCoverage: true,
+  moduleNameMapper: {
+    '\\.(css)$': 'identity-obj-proxy',
+  },
 };
